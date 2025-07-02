@@ -19,7 +19,13 @@ async def create_produtor(dto: ProdutorCreateDTO, db: AsyncSession = Depends(get
 @router.get("/", response_model=list[ProdutorReadDTO])
 async def list_produtores(db: AsyncSession = Depends(get_db)):
     service = ProdutorService(ProdutorRepository(db))
-    return await service.get_all_produtores()
+    try:
+        return await service.get_all_produtores()
+    except Exception as e:
+        import traceback
+        print("Erro ao listar produtores:", e)
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Erro interno ao listar produtores: {e}")
 
 @router.get("/{produtor_id}", response_model=ProdutorReadDTO)
 async def get_produtor(produtor_id: int, db: AsyncSession = Depends(get_db)):

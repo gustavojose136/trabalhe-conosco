@@ -7,7 +7,10 @@ until nc -z db 5432; do
 done
 
 # Cria as tabelas
-python shared/database/init_db.py
+python shared/database/create_tables.py
+
+# Popula o banco com dados de exemplo
+python shared/database/seed_data.py
 
 # Inicia o servidor FastAPI
 exec uvicorn main:app --host 0.0.0.0 --port 8000 

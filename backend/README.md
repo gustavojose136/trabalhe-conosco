@@ -307,3 +307,52 @@ python -m pytest tests/ --lf -v
 - [ ] Testes de carga
 - [ ] Automação de testes E2E
 - [ ] Integração com ferramentas de qualidade de código 
+
+## Como rodar o seed de dados (popular o banco)
+
+Se estiver usando Docker Compose, execute o seguinte comando na raiz do projeto:
+
+```
+docker-compose exec backend python src/shared/database/seed_data.py
+```
+
+Isso irá popular o banco de dados com dados de exemplo para testes e desenvolvimento 
+
+# Backend - Trabalhe Conosco
+
+## Como rodar o backend (Docker Compose)
+
+### Subir backend, banco e seed automaticamente
+
+```sh
+# Na raiz do projeto
+
+docker-compose up -d db backend
+```
+
+### Resetar banco e dados
+
+```sh
+docker-compose down -v
+docker-compose up -d db backend
+```
+
+### Build sem cache
+
+```sh
+docker-compose build --no-cache backend
+```
+
+## O que é feito automaticamente?
+- O backend aguarda o banco, cria as tabelas e popula com dados de exemplo (seed) via entrypoint.sh.
+- Não é necessário rodar scripts manualmente.
+
+## Rodar seed manualmente (opcional)
+```sh
+docker-compose exec backend python shared/database/seed_data.py
+```
+
+## Logs do backend
+```sh
+docker-compose logs backend
+``` 

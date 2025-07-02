@@ -108,4 +108,46 @@ O projeto usa Docker Compose para orquestrar:
 
 ## 📝 Licença
 
-Este projeto foi desenvolvido como parte de um desafio técnico. 
+Este projeto foi desenvolvido como parte de um desafio técnico.
+
+## Como rodar o projeto (Docker Compose)
+
+### Subir tudo (backend, frontend e banco de dados)
+
+```sh
+# Na raiz do projeto
+
+docker-compose up -d
+```
+
+### Resetar o ambiente (apagar banco e dados)
+
+```sh
+docker-compose down -v
+docker-compose up -d
+```
+
+### Build sem cache (garantir que tudo será reconstruído)
+
+```sh
+docker-compose build --no-cache
+docker-compose up -d
+```
+
+## O que acontece automaticamente?
+- O backend aguarda o banco de dados, cria as tabelas e popula com dados de exemplo automaticamente (via entrypoint.sh).
+- Não é necessário rodar scripts manualmente.
+
+## Acessando o sistema
+- Frontend: http://localhost:4200
+- Backend (API): http://localhost:8000/docs (Swagger)
+
+## Observações
+- Se precisar rodar o seed manualmente, use:
+  ```sh
+  docker-compose exec backend python shared/database/seed_data.py
+  ```
+- Para logs do backend:
+  ```sh
+  docker-compose logs backend
+  ``` 

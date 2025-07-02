@@ -1,7 +1,3 @@
-#!/usr/bin/env python3
-"""
-Script para inicializar o banco de dados
-"""
 import os
 import sys
 from sqlalchemy import create_engine, text
@@ -31,6 +27,17 @@ def init_database():
             
             if existing_tables:
                 print(f"📋 Tabelas existentes: {', '.join(existing_tables)}")
+                
+                # Executar seed de dados
+                print("🌱 Inserindo dados de teste...")
+                try:
+                    with open('shared/database/seed_data.sql', 'r') as f:
+                        seed_sql = f.read()
+                    conn.execute(text(seed_sql))
+                    conn.commit()
+                    print("✅ Dados de teste inseridos com sucesso!")
+                except Exception as e:
+                    print(f"⚠️ Erro ao inserir dados de teste: {e}")
             else:
                 print("📋 Nenhuma tabela encontrada. Execute as migrações se necessário.")
                 

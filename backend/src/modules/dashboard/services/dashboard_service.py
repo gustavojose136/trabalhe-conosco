@@ -39,4 +39,29 @@ class DashboardService:
         return {
             "agricultavel": row[0] or 0.0,
             "vegetacao": row[1] or 0.0
-        } 
+        }
+
+    async def total_produtores(self) -> int:
+        result = await self.session.execute(select(func.count(Produtor.id)))
+        return int(result.scalar() or 0)
+
+    async def total_propriedades(self) -> int:
+        result = await self.session.execute(select(func.count(Propriedade.id)))
+        return int(result.scalar() or 0)
+
+    async def total_culturas(self) -> int:
+        result = await self.session.execute(select(func.count(Cultura.id)))
+        return int(result.scalar() or 0)
+
+    async def total_safras(self) -> int:
+        from modules.safra.entities.safra import Safra
+        result = await self.session.execute(select(func.count(Safra.id)))
+        return int(result.scalar() or 0)
+
+    async def area_total_agricultavel(self) -> float:
+        result = await self.session.execute(select(func.sum(Propriedade.area_agricultavel)))
+        return result.scalar() or 0.0
+
+    async def area_total_vegetacao(self) -> float:
+        result = await self.session.execute(select(func.sum(Propriedade.area_vegetacao)))
+        return result.scalar() or 0.0 
