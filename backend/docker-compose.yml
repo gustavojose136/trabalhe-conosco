@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: rural
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  api:
+    build: .
+    command: uvicorn main:backend --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./src:/backend/src
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/rural
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+
+volumes:
+  pgdata: 

@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  test-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: test_rural_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"  # Porta diferente para não conflitar com o banco principal
+    volumes:
+      - test_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  test-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@test-db:5432/test_rural_db
+      ENVIRONMENT: test
+    depends_on:
+      test-db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    command: >
+      sh -c "
+        echo 'Aguardando banco de dados...' &&
+        sleep 10 &&
+        echo 'Executando testes...' &&
+        python -m pytest tests/ -v --tb=short
+      "
+
+volumes:
+  test_db_data: 
