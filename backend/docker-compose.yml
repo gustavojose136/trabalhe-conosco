@@ -15,9 +15,9 @@ services:
 
   api:
     build: .
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn main:backend --host 0.0.0.0 --port 8000 --reload
     volumes:
-      - ./src:/app/src
+      - ./src:/backend/src
     environment:
       - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/rural
     ports:
