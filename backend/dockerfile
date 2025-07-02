@@ -1,15 +1,20 @@
 FROM python:3.11-slim
 
-WORKDIR /backend/src
+# 1) a partir de agora o contexto de build fica em /app,
+#    de modo que /app/src exista como pacote src/
+WORKDIR /app/src
 
 # 2) instale as deps
 RUN apt-get update && apt-get install -y netcat-openbsd && apt-get clean
 COPY requirements.txt ../
 RUN pip install --no-cache-dir -r ../requirements.txt
 
+# 3) copie a pasta inteira src/ para /app/src
 COPY ./src .
-COPY ../entrypoint.sh /backend/entrypoint.sh
+COPY ../entrypoint.sh /app/entrypoint.sh
 
-ENV PYTHONPATH=/backend/src
+# 4) (opcional) você não precisa setar PYTHONPATH,
+#    pois o cwd (/app) já estará em sys.path
+ENV PYTHONPATH=/app/src
 
-ENTRYPOINT ["/backend/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]

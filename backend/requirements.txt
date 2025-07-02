@@ -4,4 +4,12 @@ sqlalchemy
 asyncpg
 psycopg2-binary
 python-dotenv
-pydantic 
+pydantic
+pytest
+pytest-asyncio
+httpx
+pytest-cov
+pytest
+pytest-asyncio
+httpx
+pytest-cov 
