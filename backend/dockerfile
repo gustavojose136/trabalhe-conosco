@@ -10,7 +10,8 @@ RUN pip install --no-cache-dir -r ../requirements.txt
 
 # 3) copie a pasta inteira src/ para /backend/src
 COPY ./src .
-COPY ../entrypoint.sh /backend/entrypoint.sh
+COPY ./entrypoint.sh /backend/entrypoint.sh
+RUN chmod +x /backend/entrypoint.sh
 
 # 4) (opcional) você não precisa setar PYTHONPATH,
 #    pois o cwd (/backend) já estará em sys.path

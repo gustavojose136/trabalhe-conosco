@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/rural_db
+    depends_on:
+      - db
+    networks:
+      - rural-network
+
+  # Frontend Angular
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - rural-network
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=rural_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - rural-network
+
+volumes:
+  pgdata:
+
+networks:
+  rural-network:
+    driver: bridge 

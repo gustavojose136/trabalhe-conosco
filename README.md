@@ -1,103 +1,111 @@
-# **Brain Agriculture - Teste Técnico v2**
+# Sistema de Gestão de Produtores Rurais
 
-Olá! Bem-vindo(a) ao nosso teste técnico. Estamos muito animados para conhecer mais sobre você, suas habilidades técnicas e sua forma de resolver problemas. Este teste foi pensado para ser um reflexo do que valorizamos em nosso time, e esperamos que você se sinta confortável e confiante durante o processo.
+Sistema completo para gestão de produtores rurais, propriedades, culturas e safras, desenvolvido com FastAPI (back-end) e Angular (front-end).
 
-## **O que queremos avaliar?**
+## 🚀 Tecnologias
 
-Nosso objetivo com este teste é entender melhor como você:
+- **Back-end**: FastAPI, SQLAlchemy, PostgreSQL
+- **Front-end**: Angular 17, Bootstrap 5, Bootstrap Icons
+- **Infraestrutura**: Docker, Docker Compose
 
-- Resolve problemas relacionados à lógica de programação e orientação a objetos.
-- Interpreta requisitos de negócio e os transforma em soluções técnicas.
-- Aplica boas práticas de desenvolvimento, com foco em código limpo, testável, de fácil manutenção e observável.
-- Garante que o sistema seja escalável e confiável, principalmente ao lidar com grande volume de dados.
-- Escreve documentações claras para facilitar a integração e manutenção por outros desenvolvedores ou clientes.
+## 📋 Pré-requisitos
 
-**Dica:** Imagine que você está criando uma aplicação que será utilizada por clientes, parceiros ou até mesmo por outros desenvolvedores. Queremos ver sua atenção aos detalhes!
+- Docker
+- Docker Compose
 
-## **O que você precisa desenvolver?**
+## 🏃‍♂️ Como executar
 
-A proposta é criar uma aplicação para gerenciar o cadastro de produtores rurais, com os seguintes dados:
+### 1. Clone o repositório
+```bash
+git clone <url-do-repositorio>
+cd teste
+```
 
-- CPF ou CNPJ
-- Nome do produtor
-- Nome da fazenda (propriedade)
-- Cidade
-- Estado
-- Área total da fazenda (em hectares)
-- Área agricultável (em hectares)
-- Área de vegetação (em hectares)
-- Safras (ex: Safra 2021, Safra 2022)
-- Culturas plantadas (ex.: Soja na Safra 2021, Milho na Safra 2021, Café na Safra 2022)
+### 2. Execute com Docker Compose
+```bash
+docker-compose up --build
+```
 
-### **Requisitos de negócio**
+### 3. Acesse a aplicação
+- **Front-end**: http://localhost
+- **Back-end API**: http://localhost:8000
+- **Documentação da API**: http://localhost:8000/docs
 
-1. Permitir o cadastro, edição e exclusão de produtores rurais.
-2. Validar o CPF ou CNPJ fornecido pelo usuário.
-3. Garantir que a soma das áreas agricultável e de vegetação não ultrapasse a área total da fazenda.
-4. Permitir o registro de várias culturas plantadas por fazenda do produtor.
-5. Um produtor pode estar associado a 0, 1 ou mais propriedades rurais.
-6. Uma propriedade rural pode ter 0, 1 ou mais culturas plantadas por safra.
-7. Exibir um dashboard com:
-   - Total de fazendas cadastradas (quantidade).
-   - Total de hectares registrados (área total).
-   - Gráficos de pizza:
-     - Por estado.
-     - Por cultura plantada.
-     - Por uso do solo (área agricultável e vegetação).
+## 📁 Estrutura do Projeto
 
----
+```
+teste/
+├── app/                    # Back-end FastAPI
+│   ├── src/
+│   │   ├── modules/        # Módulos da aplicação
+│   │   └── shared/         # Utilitários compartilhados
+│   ├── Dockerfile
+│   └── docker-compose.yml
+├── frontend/               # Front-end Angular
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── features/   # Módulos das entidades
+│   │   │   ├── core/       # Serviços e utilitários
+│   │   │   └── shared/     # Componentes compartilhados
+│   │   └── styles.scss
+│   ├── Dockerfile
+│   └── nginx.conf
+└── docker-compose.yml      # Orquestração principal
+```
 
-## **Tecnologias sugeridas**
+## 🔧 Funcionalidades
 
-Sabemos que você pode ter seu próprio estilo, mas aqui estão algumas tecnologias e boas práticas que valorizamos:
+### Back-end (FastAPI)
+- ✅ CRUD completo para Produtores
+- ✅ CRUD completo para Propriedades
+- ✅ CRUD completo para Culturas
+- ✅ CRUD completo para Safras
+- ✅ Dashboard com estatísticas
+- ✅ Validações de negócio (CPF/CNPJ, áreas)
+- ✅ Banco de dados PostgreSQL
 
-- **Conceitos**: SOLID, KISS, Clean Code, API Contracts, Testes, Arquitetura em camadas.
-- **Documentações**: Para facilitar o entendimento do funcionamento do sistema, é importante incluir um README claro, uma especificação OpenAPI e, caso necessário, diagramas que ajudem a visualizar a arquitetura ou os processos.
-- **Bônus**: Se conseguir disponibilizar a aplicação na nuvem e acessível via internet, será um diferencial!
+### Front-end (Angular)
+- ✅ Interface responsiva com Bootstrap
+- ✅ Navegação global com navbar
+- ✅ Dashboard com métricas
+- ✅ Formulários reativos com validação
+- ✅ Tabelas com ordenação e filtros
+- ✅ Ícones modernos com Bootstrap Icons
 
-### **Se você for desenvolvedor FRONTEND:**
+## 🛠️ Desenvolvimento
 
-- Utilize **TypeScript**.
-- Utilize **ReactJS**.
-- Use **Redux** para gerenciar o estado da aplicação.
-  - Se preferir, você pode usar **Context API** como alternativa ou complemento ao Redux (opcional).
-- Estruture dados "mockados" para simular cenários.
-- Desenvolva testes unitários com **Jest** e **React Testing Library**.
-- Estruture os componentes utilizando atomic design patterns.
-- Utilize css in js com bibliotecas como **Styled Components** ou **Emotion**.
-- Estruture o projeto como um microfrontend (opcional);
+### Back-end
+```bash
+cd app
+docker-compose up
+```
 
-### **Se você for desenvolvedor BACKEND:**
+### Front-end
+```bash
+cd frontend
+npm install
+npm start
+```
 
-- Desenvolva uma **API REST**.
-- Utilize **Docker** para distribuir a aplicação.
-- Utilize **Postgres** como banco de dados.
-- Crie os endpoints necessários para atender os requisitos de negócio.
-- Desenvolva testes unitários e integrados.
-- Estruture dados "mockados" para testes.
-- Inclua logs para garantir a observabilidade do sistema, facilitando o monitoramento e a identificação de possíveis problemas.
-- Utilize um framework de ORM.
+## 📊 Endpoints da API
 
-#### **Se você for desenvolvedor BACKEND Node:**
+- `GET /produtores/` - Listar produtores
+- `POST /produtores/` - Criar produtor
+- `GET /propriedades/` - Listar propriedades
+- `POST /propriedades/` - Criar propriedade
+- `GET /culturas/` - Listar culturas
+- `POST /culturas/` - Criar cultura
+- `GET /safras/` - Listar safras
+- `POST /safras/` - Criar safra
+- `GET /dashboard/stats` - Estatísticas do dashboard
 
-- Utilize **TypeScript**.
-- Utilize **NestJS** ou **AdonisJS**
+## 🐳 Docker
 
-#### **Se você for desenvolvedor BACKEND Python:**
+O projeto usa Docker Compose para orquestrar:
+- **backend**: FastAPI na porta 8000
+- **frontend**: Angular com Nginx na porta 80
+- **db**: PostgreSQL na porta 5432
 
-- Utilize **Python 3**.
-- Utilize **Django**, **Flask** ou **FastAPI**.
+## 📝 Licença
 
-### **Se você for desenvolvedor FULLSTACK:**
-
-- Conclua tanto o FRONTEND quanto o BACKEND, garantindo a integração entre eles.
-
----
-
-## **Como enviar seu projeto?**
-
-Ao concluir o desenvolvimento, suba o código-fonte para um repositório no **GitHub** (ou outro provedor de sua escolha). Certifique-se de que o repositório seja público ou que possamos acessá-lo, e nos envie o link.
-
----
-
-**Nota final:** Queremos que você aproveite esse desafio para mostrar suas habilidades, mas também para aprender e se divertir. Se tiver dúvidas ou precisar de alguma orientação durante o processo, estamos aqui para ajudar! Boa sorte! 🌟
+Este projeto foi desenvolvido como parte de um desafio técnico. 
